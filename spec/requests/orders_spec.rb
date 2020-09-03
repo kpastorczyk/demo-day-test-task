@@ -52,6 +52,9 @@ RSpec.describe "/orders", type: :request do
              params: { order: valid_attributes.merge(products_attributes) }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
+        expect(JSON.parse(response.body).keys).to match_array(%w[id status products])
+        expect(JSON.parse(response.body)["products"].count).to eq(2)
+
       end
     end
 
