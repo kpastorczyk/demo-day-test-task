@@ -8,7 +8,7 @@ class CreateOrderWithProductsService
   def call
     @order_form = OrderForm.new(params.except("products"))
     @products = (params[:products] || []).map do |product|
-      ProductForm.new(product)
+      "#{product["type"]}Form".classify.constantize.new(product)
     end
     result_for(order.errors) if !@order_form.valid?
 
