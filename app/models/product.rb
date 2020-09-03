@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
   belongs_to :order
 
+  validates_presence_of :order_id, :type
+
   def width
     product_attributes["width"]
   end
