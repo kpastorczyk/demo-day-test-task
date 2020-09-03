@@ -6,15 +6,16 @@ class CreateOrderWithProductsService
   end
 
   def call
-    @order = Order.new(params.except("products"))
-    result_for(order.errors) if !order.valid?
+    @order_form = OrderForm.new(params.except("products"))
+    @products = (params[:products] || []).map do |product|
+      ProductForm.new(product)
+    end
+    result_for(order.errors) if !@order_form.valid?
 
     ActiveRecord::Base.transaction do
-      (params[:products] || []).each do |product|
-        order.save!
-        Product.new(product.merge!(order: order)).save!
-      end
-      return OpenStruct.new(success?: true, order: order, errors: order.errors)
+      @order = @order_form.save
+      @products.each{ |product| product.save }
+      return OpenStruct.new(success?: true, order: @order, errors: @order.errors)
     end
   rescue => error
     result_for(error)

@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
   def create
     result = CreateOrderWithProductsService.new(order_params).call
     if result.success?
-      render json: result.order, status: :created, location: @order
+      render json: result.order, status: :created, location: result.order
     else
       render json: result.errors, status: :unprocessable_entity
     end
