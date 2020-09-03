@@ -8,7 +8,8 @@ RSpec.describe "/orders", type: :request do
   let(:products_attributes) {
     {
       products: [
-        attributes_for(:product, type: "Product::MailerBox")
+        attributes_for(:product, type: "Product::MailerBox"),
+        attributes_for(:product, type: "Product::PolyMailer"),
       ]
     }
   }
