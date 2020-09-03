@@ -15,12 +15,11 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = CreateOrderWithProductsService.new(order_params).call
-
-    if @order
-      render json: @order, status: :created, location: @order
+    result = CreateOrderWithProductsService.new(order_params).call
+    if result.success?
+      render json: result.order, status: :created, location: @order
     else
-      render json: @order.errors, status: :unprocessable_entity
+      render json: result.errors, status: :unprocessable_entity
     end
   end
 
