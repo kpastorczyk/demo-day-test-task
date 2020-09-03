@@ -9,7 +9,8 @@ class CreateOrderWithProductsService
     ActiveRecord::Base.transaction do
       order = Order.new(params.except("products"))
       (params[:products] || []).each do |product|
-        Product.new(product.merge!(product_attributes: nil, order: order)).save!
+        Product.new(product.merge!(order: order)).save!
+        p Product.last
       end
       return order
     end

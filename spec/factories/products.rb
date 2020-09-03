@@ -2,6 +2,11 @@ FactoryBot.define do
   factory :product do
     type { "" }
     quantity { 1 }
+    order_id { 1 }
+  end
+
+  trait :mailer_box do
+    type { "Product::MailerBox" }
     product_attributes do
       {
         width: 10,
@@ -9,6 +14,16 @@ FactoryBot.define do
         length: 10
       }
     end
-    order_id { 1 }
+  end
+
+  trait :poly_mailer do
+    type { "Product::PolyMailer" }
+    product_attributes do
+      {
+        width: 10,
+        height: 10,
+        material: "transparent"
+      }
+    end
   end
 end

@@ -8,8 +8,8 @@ RSpec.describe "/orders", type: :request do
   let(:products_attributes) {
     {
       products: [
-        attributes_for(:product, type: "Product::MailerBox"),
-        attributes_for(:product, type: "Product::PolyMailer"),
+        attributes_for(:product, :mailer_box),
+        attributes_for(:product, :poly_mailer),
       ]
     }
   }
@@ -54,7 +54,6 @@ RSpec.describe "/orders", type: :request do
         expect(response.content_type).to match(a_string_including("application/json"))
         expect(JSON.parse(response.body).keys).to match_array(%w[id status products])
         expect(JSON.parse(response.body)["products"].count).to eq(2)
-
       end
     end
 
