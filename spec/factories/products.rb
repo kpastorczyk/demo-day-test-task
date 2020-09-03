@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :product do
     type { "" }
     quantity { 1 }
-    order_id { 1 }
+    order
   end
 
   trait :mailer_box do
