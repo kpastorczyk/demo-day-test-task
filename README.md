@@ -1,6 +1,6 @@
 # README
 
-#The Story
+# The Story
 As Salesman I need to have a system that will allow to create an offer prepared for a particular client. Offer can have multiple products. Every product has its own type, quantity, price and attributes that are specific to the type of product. Salesman should be able to specify quantity, type and attributes of the product. Price should be automatically calculated. Every product has its own calculation mechanism.
 There is two types of products:
 
