@@ -3,8 +3,12 @@ class OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
-    p @orders.count
+    orders_query_service = GetOrdersQueryService.new
+    @orders = if current_user.admin_role?
+                orders_query_service.for_admin
+              else
+                orders_query_service.for(current_user)
+              end
     render json: @orders
   end
 
