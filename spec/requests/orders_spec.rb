@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/orders", type: :request do
+  let(:sales) { create(:user, sales_role: true) }
+  let(:admin) { create(:user, admin_role: true) }
   let(:valid_attributes) {
     attributes_for(:order)
   }
@@ -22,13 +24,27 @@ RSpec.describe "/orders", type: :request do
     {}
   }
 
+  before do
+    sign_in(sales)
+  end
+
   describe "GET /index" do
     let!(:order) { create(:order) }
+    let!(:order_2) { create(:order) }
     let!(:product) { create(:product, :mailer_box, order: order) }
+
     it "renders a successful response" do
       get orders_url, headers: valid_headers, as: :json
       expect(response).to be_successful
       expect(JSON.parse(response.body).first["products"].count).to eq(1)
+    end
+
+    context "as a admin" do
+      it "renders all records" do
+        sign_in(admin)
+        get orders_url, headers: valid_headers, as: :json
+        expect(JSON.parse(response.body).count).to eq(2)
+      end
     end
   end
 

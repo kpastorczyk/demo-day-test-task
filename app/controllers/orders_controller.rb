@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   # GET /orders
   def index
     @orders = Order.all
-
+    p @orders.count
     render json: @orders
   end
 
